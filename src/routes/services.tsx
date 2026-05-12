@@ -1,5 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Wind, Paintbrush, Wrench, Home, Sparkles, Sofa, Bed, Bug, Cctv, DoorOpen, Droplets, ShieldCheck } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Wind, Paintbrush, Wrench, Home, Sparkles, Sofa, Bed, Bug, Cctv, DoorOpen, Droplets, ShieldCheck, ArrowRight } from "lucide-react";
+import ac from "@/assets/service-ac.jpg";
+import reno from "@/assets/service-renovation.jpg";
+import clean from "@/assets/service-cleaning.jpg";
+import electrical from "@/assets/service-electrical.jpg";
+import plumbing from "@/assets/service-plumbing.jpg";
+import kitchen from "@/assets/project-kitchen.jpg";
 
 export const Route = createFileRoute("/services")({
   component: Services,
@@ -69,6 +75,27 @@ function Services() {
         </p>
       </section>
 
+      <section className="px-6 lg:px-10 pb-12 max-w-7xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[
+            { img: ac, t: "AC & HVAC" },
+            { img: reno, t: "Renovation" },
+            { img: clean, t: "Deep Cleaning" },
+            { img: electrical, t: "Electrical & ELV" },
+            { img: plumbing, t: "Plumbing" },
+            { img: kitchen, t: "Kitchen & Joinery" },
+          ].map((s) => (
+            <div key={s.t} className="relative rounded-2xl overflow-hidden border border-border shadow-elegant group">
+              <img src={s.img} alt={s.t} loading="lazy" width={1280} height={960} className="w-full h-56 object-cover group-hover:scale-105 transition duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-5">
+                <h3 className="font-display text-xl">{s.t}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="px-6 lg:px-10 pb-24 max-w-7xl mx-auto space-y-16">
         {groups.map((g) => (
           <div key={g.title}>
@@ -89,6 +116,16 @@ function Services() {
             </div>
           </div>
         ))}
+      </section>
+
+      <section className="px-6 lg:px-10 pb-24 max-w-7xl mx-auto">
+        <div className="rounded-3xl border border-primary/30 bg-card p-10 lg:p-14 text-center shadow-elegant">
+          <h2 className="font-display text-3xl sm:text-4xl mb-4">Need something not listed?</h2>
+          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">If your property needs it, we probably do it. Reach out and we'll arrange a tailored visit.</p>
+          <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-gold text-primary-foreground font-semibold shadow-gold">
+            Talk to a specialist <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
       </section>
     </>
   );

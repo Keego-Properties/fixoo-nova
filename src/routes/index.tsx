@@ -1,9 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Shield, Clock, Sparkles, Wrench, Building2, Phone } from "lucide-react";
+import { ArrowRight, Shield, Clock, Sparkles, Wrench, Building2, Phone, Star, CheckCircle2, Quote } from "lucide-react";
 import hero from "@/assets/hero-building.jpg";
+import banner from "@/assets/hero-banner.jpg";
 import ac from "@/assets/service-ac.jpg";
 import reno from "@/assets/service-renovation.jpg";
 import clean from "@/assets/service-cleaning.jpg";
+import electrical from "@/assets/service-electrical.jpg";
+import plumbing from "@/assets/service-plumbing.jpg";
+import team from "@/assets/team.jpg";
+import living from "@/assets/project-living.jpg";
+import kitchen from "@/assets/project-kitchen.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -26,6 +32,22 @@ const services = [
   { img: ac, title: "AC & HVAC", desc: "Duct cleaning, servicing and full HVAC maintenance for healthy, cool spaces." },
   { img: reno, title: "Renovation", desc: "Villa, apartment, office and bathroom transformations with luxurious finishes." },
   { img: clean, title: "Deep Cleaning", desc: "Sofa, mattress, carpet, curtain and full deep-clean for homes and offices." },
+  { img: electrical, title: "Electrical & ELV", desc: "Wiring, panels, intercom, CCTV and access control by certified engineers." },
+  { img: plumbing, title: "Plumbing", desc: "Leak repair, fixture upgrades, water tank cleaning and full bathroom retrofits." },
+  { img: kitchen, title: "Kitchen Upgrades", desc: "Bespoke joinery, marble surfaces and modern fittings, installed end-to-end." },
+];
+
+const process = [
+  { n: "01", t: "Book", d: "Tell us what you need by phone, WhatsApp or our online form." },
+  { n: "02", t: "Survey", d: "Our specialist visits, inspects and prepares a transparent quote." },
+  { n: "03", t: "Execute", d: "Certified technicians arrive on time and deliver clean, careful work." },
+  { n: "04", t: "Aftercare", d: "Workmanship warranty and proactive follow-up on every job." },
+];
+
+const testimonials = [
+  { name: "Aisha R.", role: "Villa Owner, Jumeirah", quote: "From the first call to the final polish, the team was meticulous. The villa feels brand new." },
+  { name: "Daniel K.", role: "Office Manager, DIFC", quote: "Reliable, on time and incredibly professional. Our office maintenance has never been smoother." },
+  { name: "Priya S.", role: "Apartment Resident, Marina", quote: "The deep cleaning service was outstanding. Worth every dirham — I've already booked again." },
 ];
 
 function Index() {
@@ -98,6 +120,111 @@ function Index() {
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>
             </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* BANNER STRIP */}
+      <section className="relative px-6 lg:px-10">
+        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden border border-border shadow-elegant relative">
+          <img src={banner} alt="Luxury Dubai villa at golden hour" loading="lazy" width={1920} height={1080} className="w-full h-[420px] sm:h-[520px] object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
+          <div className="absolute inset-0 flex items-center">
+            <div className="px-8 sm:px-14 max-w-2xl">
+              <span className="text-xs tracking-[0.3em] text-primary font-medium">UAE WIDE COVERAGE</span>
+              <h2 className="font-display text-4xl sm:text-5xl mt-3 mb-4 leading-tight">From a single bulb to a full <span className="text-gradient-gold">villa transformation</span>.</h2>
+              <p className="text-muted-foreground mb-6">One trusted partner for your home, office and investment property — Dubai, Abu Dhabi, Sharjah and beyond.</p>
+              <Link to="/services" className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-gold text-primary-foreground font-semibold shadow-gold">
+                Browse Services <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS */}
+      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <span className="text-xs tracking-[0.3em] text-primary font-medium">HOW WE WORK</span>
+          <h2 className="font-display text-4xl sm:text-5xl mt-3">A <span className="text-gradient-gold">simple</span>, transparent process.</h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {process.map((p) => (
+            <div key={p.n} className="relative p-8 rounded-2xl bg-card border border-border shadow-elegant">
+              <div className="font-display text-5xl text-gradient-gold mb-4">{p.n}</div>
+              <h3 className="font-semibold text-lg mb-2">{p.t}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* PROJECT GALLERY */}
+      <section className="py-20 px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
+          <div>
+            <span className="text-xs tracking-[0.3em] text-primary font-medium">RECENT WORK</span>
+            <h2 className="font-display text-4xl sm:text-5xl mt-3">Projects we are <span className="text-gradient-gold">proud of</span>.</h2>
+          </div>
+          <p className="text-muted-foreground max-w-md">A glimpse into the spaces we've restored, refined and reimagined for our clients.</p>
+        </div>
+        <div className="grid md:grid-cols-12 gap-4">
+          <div className="md:col-span-7 rounded-2xl overflow-hidden border border-border shadow-elegant">
+            <img src={living} alt="Renovated luxury living room" loading="lazy" width={1280} height={960} className="w-full h-full object-cover aspect-[4/3]" />
+          </div>
+          <div className="md:col-span-5 grid gap-4">
+            <div className="rounded-2xl overflow-hidden border border-border shadow-elegant">
+              <img src={kitchen} alt="Modern kitchen renovation" loading="lazy" width={1280} height={960} className="w-full h-full object-cover aspect-[16/10]" />
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-border shadow-elegant">
+              <img src={plumbing} alt="Marble bathroom renovation" loading="lazy" width={1280} height={960} className="w-full h-full object-cover aspect-[16/10]" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY US split */}
+      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div className="rounded-3xl overflow-hidden border border-border shadow-elegant">
+          <img src={team} alt="Fixoo Nova service team" loading="lazy" width={1600} height={1067} className="w-full h-full object-cover" />
+        </div>
+        <div>
+          <span className="text-xs tracking-[0.3em] text-primary font-medium">WHY FIXOO NOVA</span>
+          <h2 className="font-display text-4xl sm:text-5xl mt-3 mb-6">A team that takes <span className="text-gradient-gold">ownership</span>.</h2>
+          <p className="text-muted-foreground leading-relaxed mb-8">Every Fixoo Nova technician is vetted, trained and uniformed. We use premium tools, document our work and stand behind every job with a written warranty.</p>
+          <ul className="space-y-3">
+            {[
+              "Licensed and insured across all UAE emirates",
+              "Transparent quotes — no hidden surprises",
+              "Eco-friendly chemicals and cleaning agents",
+              "24/7 emergency response available",
+              "Workmanship warranty on every project",
+            ].map((p) => (
+              <li key={p} className="flex items-start gap-3 text-sm">
+                <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 shrink-0" /> <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <span className="text-xs tracking-[0.3em] text-primary font-medium">CLIENT VOICES</span>
+          <h2 className="font-display text-4xl sm:text-5xl mt-3">Trusted by <span className="text-gradient-gold">homeowners</span> & businesses.</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <div key={t.name} className="p-8 rounded-2xl bg-card border border-border shadow-elegant relative">
+              <Quote className="h-8 w-8 text-primary/40 mb-4" />
+              <p className="text-sm leading-relaxed mb-6">"{t.quote}"</p>
+              <div className="flex items-center gap-1 mb-3">
+                {[...Array(5)].map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-primary text-primary" />)}
+              </div>
+              <div className="font-semibold text-sm">{t.name}</div>
+              <div className="text-xs text-muted-foreground">{t.role}</div>
+            </div>
           ))}
         </div>
       </section>
