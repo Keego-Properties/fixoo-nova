@@ -1,5 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Target, Eye, Award } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Target, Eye, Award, CheckCircle2, ArrowRight } from "lucide-react";
+import team from "@/assets/team.jpg";
+import banner from "@/assets/hero-banner.jpg";
+import living from "@/assets/project-living.jpg";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -22,6 +25,12 @@ function About() {
         <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
           Fixoo Nova was built to make life easy across the MENA region. We deliver exceptional maintenance and technical services with the precision, transparency and care your property deserves.
         </p>
+      </section>
+
+      <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
+        <div className="rounded-3xl overflow-hidden border border-border shadow-elegant">
+          <img src={banner} alt="Premium Dubai property" loading="lazy" width={1920} height={1080} className="w-full h-[360px] sm:h-[460px] object-cover" />
+        </div>
       </section>
 
       <section className="px-6 lg:px-10 py-16 max-w-7xl mx-auto grid md:grid-cols-3 gap-6">
@@ -65,6 +74,52 @@ function About() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="px-6 lg:px-10 py-20 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div className="rounded-3xl overflow-hidden border border-border shadow-elegant">
+          <img src={team} alt="Our team" loading="lazy" width={1600} height={1067} className="w-full h-full object-cover" />
+        </div>
+        <div>
+          <span className="text-xs tracking-[0.3em] text-primary font-medium">OUR PEOPLE</span>
+          <h2 className="font-display text-4xl mt-3 mb-6">Skilled hands. <span className="text-gradient-gold">Sharper minds</span>.</h2>
+          <p className="text-muted-foreground leading-relaxed mb-6">Our technicians, designers and project managers are recruited for their craft and trained continuously on the newest standards. Behind every uniform is a professional you can trust inside your home.</p>
+          <ul className="space-y-3">
+            {[
+              "Background-checked, uniformed technicians",
+              "Continuous training on the latest equipment",
+              "Fluent communication in English, Arabic & Hindi",
+              "Dedicated account manager for recurring contracts",
+            ].map((p) => (
+              <li key={p} className="flex items-start gap-3 text-sm"><CheckCircle2 className="h-5 w-5 text-primary mt-0.5 shrink-0" />{p}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="px-6 lg:px-10 py-20 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div className="lg:order-2 rounded-3xl overflow-hidden border border-border shadow-elegant">
+          <img src={living} alt="Renovated luxury living room" loading="lazy" width={1280} height={960} className="w-full h-full object-cover" />
+        </div>
+        <div className="lg:order-1">
+          <span className="text-xs tracking-[0.3em] text-primary font-medium">OUR VALUES</span>
+          <h2 className="font-display text-4xl mt-3 mb-6">Built on <span className="text-gradient-gold">trust</span> and craft.</h2>
+          <div className="space-y-5">
+            {[
+              { t: "Integrity", d: "Transparent quotes, honest reporting and zero hidden charges." },
+              { t: "Craftsmanship", d: "Every fitting, finish and fixture treated with the care of a master." },
+              { t: "Responsiveness", d: "We pick up. We show up. We follow up — every single time." },
+            ].map((v) => (
+              <div key={v.t} className="border-l-2 border-primary/60 pl-5">
+                <h3 className="font-display text-xl mb-1">{v.t}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{v.d}</p>
+              </div>
+            ))}
+          </div>
+          <Link to="/contact" className="inline-flex items-center gap-2 mt-8 px-7 py-3 rounded-full bg-gradient-gold text-primary-foreground font-semibold shadow-gold">
+            Work with us <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { useState } from "react";
+import banner from "@/assets/hero-banner.jpg";
 
 export const Route = createFileRoute("/contact")({
   component: Contact,
@@ -26,11 +27,24 @@ function Contact() {
         </p>
       </section>
 
+      <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
+        <div className="rounded-3xl overflow-hidden border border-border shadow-elegant relative">
+          <img src={banner} alt="Dubai luxury property" loading="lazy" width={1920} height={1080} className="w-full h-64 sm:h-80 object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-transparent flex items-center">
+            <div className="px-8 sm:px-14 max-w-xl">
+              <h2 className="font-display text-3xl sm:text-4xl mb-3">Same-day visits across the UAE.</h2>
+              <p className="text-muted-foreground">Reach us by phone, email or WhatsApp — we usually respond within an hour.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="px-6 lg:px-10 pb-24 max-w-7xl mx-auto grid lg:grid-cols-5 gap-8">
         <div className="lg:col-span-2 space-y-4">
           {[
             { icon: Phone, t: "Phone", v: "+971 50 000 0000", h: "tel:+971500000000" },
             { icon: Mail, t: "Email", v: "info@fixoonova.ae", h: "mailto:info@fixoonova.ae" },
+            { icon: MessageSquare, t: "WhatsApp", v: "+971 50 000 0000", h: "https://wa.me/971500000000" },
             { icon: MapPin, t: "Address", v: "Dubai, United Arab Emirates" },
             { icon: Clock, t: "Hours", v: "24 / 7 — Always on call" },
           ].map((c) => (
