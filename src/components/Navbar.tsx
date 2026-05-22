@@ -1,56 +1,86 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import logo from "@/assets/fixoo-nova-logo.png";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/services", label: "Services" },
-  { to: "/contact", label: "Contact" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
 ] as const;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border">
-      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-50 glass-nav border-b border-white/10">
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-[4.5rem] flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
-          <img src={logo} alt="Fixoo Nova" className="h-12 w-auto" width={48} height={48} />
+          <img src={logo} alt="Fixoo Nova" className="h-12 w-auto brightness-110" width={52} height={52} />
           <div className="hidden sm:flex flex-col leading-tight">
-            <span className="font-display text-lg text-gradient-gold font-semibold tracking-wide">FIXOO NOVA</span>
-            <span className="text-[10px] tracking-[0.3em] text-muted-foreground">BUILDING MAINTENANCE</span>
+            <span className="font-display text-xl text-gradient-gold font-semibold tracking-[0.06em]">
+              FIXOO NOVA
+            </span>
+            <span className="text-[9px] tracking-[0.35em] text-white/60 font-medium">
+              BUILDING MAINTENANCE
+            </span>
           </div>
         </Link>
         <div className="hidden md:flex items-center gap-10">
           {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors"
-              activeProps={{ className: "text-primary" }}
-              activeOptions={{ exact: l.to === "/" }}
+            <NavLink
+              key={l.href}
+              to={l.href}
+              end={l.href === "/"}
+              className={({ isActive }) =>
+                `text-[13px] font-medium tracking-wide transition-colors relative py-1 ${
+                  isActive
+                    ? "text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-gradient-gold"
+                    : "text-white/70 hover:text-primary"
+                }`
+              }
             >
               {l.label}
-            </Link>
+            </NavLink>
           ))}
-          <a href="tel:+971500000000" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-gold text-primary-foreground text-sm font-semibold shadow-gold hover:opacity-90 transition">
-            <Phone className="h-4 w-4" /> Call Us
+          <a href="tel:+971500000000" className="btn-primary text-[13px] py-2.5 px-5">
+            <Phone className="h-3.5 w-3.5" /> Call Us
           </a>
         </div>
-        <button onClick={() => setOpen(!open)} className="md:hidden text-foreground p-2" aria-label="Menu">
-          {open ? <X /> : <Menu />}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-white/80 p-2 rounded-lg hover:bg-white/10 transition"
+          aria-label="Menu"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </nav>
       {open && (
-        <div className="md:hidden border-t border-border bg-background/95">
-          <div className="px-6 py-4 flex flex-col gap-4">
+        <div className="md:hidden border-t border-white/10 bg-black/40 backdrop-blur-xl">
+          <div className="px-6 py-5 flex flex-col gap-1">
             {links.map((l) => (
-              <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="text-sm font-medium" activeProps={{ className: "text-primary" }}>
+              <NavLink
+                key={l.href}
+                to={l.href}
+                end={l.href === "/"}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `text-sm font-medium py-3 px-2 rounded-lg transition ${
+                    isActive
+                      ? "text-primary bg-primary/10"
+                      : "text-white/70 hover:text-primary hover:bg-white/5"
+                  }`
+                }
+              >
                 {l.label}
-              </Link>
+              </NavLink>
             ))}
-            <a href="tel:+971500000000" className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-gold text-primary-foreground text-sm font-semibold">
+            <a
+              href="tel:+971500000000"
+              className="btn-primary justify-center mt-3 text-sm"
+              onClick={() => setOpen(false)}
+            >
               <Phone className="h-4 w-4" /> Call Us
             </a>
           </div>

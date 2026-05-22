@@ -1,24 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import banner from "@/assets/hero-banner.jpg";
 
-export const Route = createFileRoute("/contact")({
-  component: Contact,
-  head: () => ({
-    meta: [
-      { title: "Contact — Fixoo Nova" },
-      { name: "description", content: "Get in touch with Fixoo Nova for premium building maintenance services in Dubai and across the UAE." },
-    ],
-  }),
-});
-
-function Contact() {
+export default function ContactPage() {
   const [sent, setSent] = useState(false);
   return (
     <>
       <section className="px-6 lg:px-10 pt-24 pb-12 max-w-7xl mx-auto">
-        <span className="text-xs tracking-[0.3em] text-primary font-medium">GET IN TOUCH</span>
+        <span className="eyebrow">GET IN TOUCH</span>
         <h1 className="font-display text-5xl sm:text-6xl mt-4 mb-6 max-w-4xl leading-tight">
           Let's make your property <span className="text-gradient-gold">shine</span>.
         </h1>
@@ -29,11 +18,22 @@ function Contact() {
 
       <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
         <div className="rounded-3xl overflow-hidden border border-border shadow-elegant relative">
-          <img src={banner} alt="Dubai luxury property" loading="lazy" width={1920} height={1080} className="w-full h-64 sm:h-80 object-cover" />
+          <img
+            src={banner}
+            alt="Dubai luxury property"
+            loading="lazy"
+            width={1920}
+            height={1080}
+            className="w-full h-64 sm:h-80 object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-transparent flex items-center">
             <div className="px-8 sm:px-14 max-w-xl">
-              <h2 className="font-display text-3xl sm:text-4xl mb-3">Same-day visits across the UAE.</h2>
-              <p className="text-muted-foreground">Reach us by phone, email or WhatsApp — we usually respond within an hour.</p>
+              <h2 className="font-display text-3xl sm:text-4xl mb-3">
+                Same-day visits across the UAE.
+              </h2>
+              <p className="text-muted-foreground">
+                Reach us by phone, email or WhatsApp — we usually respond within an hour.
+              </p>
             </div>
           </div>
         </div>
@@ -44,17 +44,28 @@ function Contact() {
           {[
             { icon: Phone, t: "Phone", v: "+971 50 000 0000", h: "tel:+971500000000" },
             { icon: Mail, t: "Email", v: "info@fixoonova.ae", h: "mailto:info@fixoonova.ae" },
-            { icon: MessageSquare, t: "WhatsApp", v: "+971 50 000 0000", h: "https://wa.me/971500000000" },
+            {
+              icon: MessageSquare,
+              t: "WhatsApp",
+              v: "+971 50 000 0000",
+              h: "https://wa.me/971500000000",
+            },
             { icon: MapPin, t: "Address", v: "Dubai, United Arab Emirates" },
             { icon: Clock, t: "Hours", v: "24 / 7 — Always on call" },
           ].map((c) => (
-            <a key={c.t} href={c.h ?? "#"} className="block p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition shadow-elegant">
+            <a
+              key={c.t}
+              href={c.h ?? "#"}
+              className="block p-6 premium-card premium-card-hover"
+            >
               <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
+                <div className="icon-gold shrink-0">
                   <c.icon className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <div className="text-xs tracking-widest text-muted-foreground uppercase">{c.t}</div>
+                  <div className="text-xs tracking-widest text-muted-foreground uppercase">
+                    {c.t}
+                  </div>
                   <div className="font-medium mt-1">{c.v}</div>
                 </div>
               </div>
@@ -63,8 +74,11 @@ function Contact() {
         </div>
 
         <form
-          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-          className="lg:col-span-3 p-8 rounded-2xl bg-card border border-border shadow-elegant space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSent(true);
+          }}
+          className="lg:col-span-3 p-8 premium-card space-y-5"
         >
           <div className="grid sm:grid-cols-2 gap-5">
             <Field label="Name" name="name" required />
@@ -73,10 +87,20 @@ function Contact() {
           <Field label="Email" name="email" type="email" required />
           <Field label="Service Required" name="service" />
           <div>
-            <label className="text-xs tracking-widest text-muted-foreground uppercase">Message</label>
-            <textarea name="message" rows={5} required className="mt-2 w-full bg-background border border-input rounded-lg px-4 py-3 text-sm focus:border-primary focus:outline-none transition" />
+            <label className="text-xs tracking-widest text-muted-foreground uppercase">
+              Message
+            </label>
+            <textarea
+              name="message"
+              rows={5}
+              required
+              className="mt-2 w-full bg-background border border-input rounded-lg px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+            />
           </div>
-          <button type="submit" className="w-full px-7 py-3.5 rounded-full bg-gradient-gold text-primary-foreground font-semibold shadow-gold hover:opacity-90 transition">
+          <button
+            type="submit"
+            className="btn-primary w-full justify-center"
+          >
             {sent ? "Thank you — we'll be in touch" : "Send Message"}
           </button>
         </form>
@@ -85,11 +109,26 @@ function Contact() {
   );
 }
 
-function Field({ label, name, type = "text", required }: { label: string; name: string; type?: string; required?: boolean }) {
+function Field({
+  label,
+  name,
+  type = "text",
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+}) {
   return (
     <div>
       <label className="text-xs tracking-widest text-muted-foreground uppercase">{label}</label>
-      <input name={name} type={type} required={required} className="mt-2 w-full bg-background border border-input rounded-lg px-4 py-3 text-sm focus:border-primary focus:outline-none transition" />
+      <input
+        name={name}
+        type={type}
+        required={required}
+        className="mt-2 w-full bg-background border border-input rounded-lg px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+      />
     </div>
   );
 }
