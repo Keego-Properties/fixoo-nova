@@ -1,6 +1,6 @@
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import banner from "@/assets/hero-banner.jpg";
+import banner from "@/assets/hero-banner-1.jpg";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);

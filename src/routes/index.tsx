@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -5,21 +6,25 @@ import {
   Clock,
   Sparkles,
   Wrench,
-  Building2,
   Phone,
   Star,
   CheckCircle2,
   Quote,
 } from "lucide-react";
 import {
+  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import banner from "@/assets/hero-banner.jpg";
-import ac from "@/assets/service-ac.jpg";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import heroSlideOne from "@/assets/hero-banner-1.jpg";
+import heroSlideTwo from "@/assets/her-banner-2.jpg";
+import heroSlideThree from "@/assets/hero-banner-3.jpg";
+import heroBuilding from "@/assets/hero-building.jpg";
+import ac from "@/assets/service-ac.jpg"; 
 import reno from "@/assets/service-renovation.jpg";
 import clean from "@/assets/service-cleaning.jpg";
 import electrical from "@/assets/service-electrical.jpg";
@@ -138,54 +143,272 @@ const testimonials = [
   },
 ];
 
+const HOME_POPUP_KEY = "fixoo_nova_home_popup_seen_v1";
+
+const popupServices = [
+  ...new Set(services.map((service) => service.title)),
+  "General Maintenance",
+  "Other",
+];
+
+const heroSlides = [
+  {
+    src: heroSlideOne,
+    alt: "Cleaning team preparing a modern apartment",
+  },
+  {
+    src: heroSlideTwo,
+    alt: "Professional technician vacuuming a living room",
+  },
+  {
+    src: heroSlideThree,
+    alt: "Technician fixing a sink in a luxury bathroom",
+  },
+];
+
 export default function IndexPage() {
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupSent, setPopupSent] = useState(false);
+  const [heroApi, setHeroApi] = useState<CarouselApi>();
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+
+  useEffect(() => {
+    try {
+      const hasSeenPopup = window.localStorage.getItem(HOME_POPUP_KEY);
+      if (!hasSeenPopup) {
+        setShowPopup(true);
+        window.localStorage.setItem(HOME_POPUP_KEY, "true");
+      }
+    } catch {
+      setShowPopup(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!heroApi) {
+      return;
+    }
+
+    const updateActiveSlide = () => {
+      setActiveHeroIndex(heroApi.selectedScrollSnap());
+    };
+
+    updateActiveSlide();
+    heroApi.on("select", updateActiveSlide);
+    heroApi.on("reInit", updateActiveSlide);
+
+    const autoRotate = window.setInterval(() => {
+      heroApi.scrollNext();
+    }, 5000);
+
+    return () => {
+      window.clearInterval(autoRotate);
+      heroApi.off("select", updateActiveSlide);
+      heroApi.off("reInit", updateActiveSlide);
+    };
+  }, [heroApi]);
+
+  useEffect(() => {
+    const revealGroups = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal-group]"));
+
+    if (!revealGroups.length) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const group = entry.target as HTMLElement;
+            const revealItems = Array.from(group.querySelectorAll<HTMLElement>("[data-reveal-card]"));
+
+            revealItems.forEach((item, index) => {
+              item.style.transitionDelay = `${index * 240}ms`;
+              item.classList.add("is-visible");
+            });
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px -25% 0px",
+        threshold: 0.15,
+      },
+    );
+
+    revealGroups.forEach((group) => {
+      observer.observe(group);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <>
+      <Dialog open={showPopup} onOpenChange={setShowPopup}>
+        <DialogContent className="max-w-xl rounded-2xl border border-primary/25 bg-card p-0">
+          <div className="p-6 sm:p-8">
+            <DialogHeader>
+              <span className="eyebrow">WELCOME TO FIXOO NOVA</span>
+              <DialogTitle className="font-display text-3xl mt-2">Book your first service visit</DialogTitle>
+              <DialogDescription className="mt-2">
+                Tell us what you need and our team will contact you with the best plan.
+              </DialogDescription>
+            </DialogHeader>
+
+            <form
+              className="mt-6 space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPopupSent(true);
+              }}
+            >
+              <div className="grid gap-4 sm:grid-cols-2">
+                <PopupField label="Name" name="popup-name" required />
+                <PopupField label="Phone" name="popup-phone" type="tel" required />
+              </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">Service</label>
+                <select
+                  name="popup-service"
+                  required
+                  defaultValue=""
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                >
+                  <option value="" disabled>
+                    Select a service
+                  </option>
+                  {popupServices.map((service) => (
+                    <option key={service} value={service}>
+                      {service}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">Message</label>
+                <textarea
+                  name="popup-message"
+                  rows={3}
+                  required
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                />
+              </div>
+
+              <button type="submit" className="btn-primary w-full justify-center">
+                {popupSent ? "Request Received" : "Submit Request"}
+              </button>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* HERO */}
-      <section className="relative min-h-[94vh] flex items-center overflow-hidden">
-        <img
-          src="https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1779367141/fn_kgi5zq.png"
-          alt="Fixoo Nova professional maintenance team"
-          className="absolute inset-0 h-full w-full object-cover opacity-60"
-          width={1920}
-          height={1280}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/35 to-background/5" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_70%_50%,oklch(0.72_0.11_82/2%),transparent)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-32 grid lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/25 bg-primary/8 text-primary eyebrow mb-8">
-              <Building2 className="h-3.5 w-3.5" /> Trusted Service Providers
-            </span>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-[4.25rem] font-bold leading-[1.08] mb-7">
-              Your Complete <br />
-              <span className="text-gradient-gold">Property Maintenance</span> <br />
-              Partner.
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-xl mb-11 leading-relaxed">
-              On-time. Done right. Fixoo Nova brings premium technical services and meticulous
-              craftsmanship to homes, villas and businesses across the UAE.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link to="/services" className="btn-primary">
-                Explore Services <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to="/contact" className="btn-outline">
-                Book a Visit
-              </Link>
+      <section className="relative min-h-screen w-full overflow-hidden bg-[#090f16]">
+        <div className="relative h-full w-full">
+          <div className="pointer-events-none absolute -top-28 -left-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-28 right-0 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+
+          <div className="relative mx-auto grid min-h-screen w-full max-w-7xl gap-10 px-6 py-24 sm:px-8 lg:grid-cols-12 lg:px-10">
+            <div className="lg:col-span-5 lg:self-center">
+              <span className="inline-flex rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/90">
+                UAE Property Maintenance
+              </span>
+
+              <h1 className="mt-5 font-display text-5xl font-bold leading-[0.98] text-white sm:text-6xl">
+                Premium Care For
+                <span className="block text-gradient-gold">Every Property.</span>
+              </h1>
+
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-white/75 sm:text-base">
+                Premium maintenance, cleaning and technical services delivered on schedule for homes,
+                villas and commercial spaces across the UAE.
+              </p>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link to="/services" className="btn-primary">
+                  Explore Services <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/12"
+                >
+                  Book a Visit
+                </Link>
+              </div>
+
+              <div className="mt-8 grid max-w-md grid-cols-3 gap-3 rounded-2xl border border-white/15 bg-black/25 p-4 text-white backdrop-blur">
+                {[
+                  { label: "Homes Sold", value: "7K+" },
+                  { label: "Customer", value: "9" },
+                  { label: "Store", value: "2K+" },
+                ].map((item) => (
+                  <div key={item.label} className="min-w-0">
+                    <p className="text-lg font-bold leading-none text-white">{item.value}</p>
+                    <p className="mt-1 truncate text-[10px] uppercase tracking-[0.12em] text-white/60">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 lg:self-center">
+              <Carousel
+                className="w-full"
+                opts={{ align: "start", loop: true, duration: 45 }}
+                setApi={setHeroApi}
+              >
+                <CarouselContent className="-ml-0">
+                  {heroSlides.map((slide, index) => (
+                    <CarouselItem key={slide.src} className="pl-0">
+                      <div className="overflow-hidden rounded-xl border border-white/10 bg-black/40">
+                        <img
+                          src={slide.src}
+                          alt={slide.alt}
+                          className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[56vh]"
+                          width={1200}
+                          height={900}
+                          loading={index === 0 ? "eager" : "lazy"}
+                        />
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+
+              <div className="mt-6 flex items-center justify-center gap-2">
+                {heroSlides.map((slide, index) => (
+                  <button
+                    key={slide.src}
+                    type="button"
+                    aria-label={`Go to hero slide ${index + 1}`}
+                    onClick={() => heroApi?.scrollTo(index)}
+                    className={`h-2.5 rounded-full transition-all ${
+                      activeHeroIndex === index
+                        ? "w-8 bg-white"
+                        : "w-2.5 bg-white/40 hover:bg-white/70"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* FEATURES */}
-      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
+      <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((f) => (
             <div
               key={f.title}
-              className="group p-8 premium-card premium-card-hover"
+              data-reveal-card
+              className="group p-8 premium-card premium-card-hover reveal-card"
             >
               <div className="icon-gold mb-5">
                 <f.icon className="h-5 w-5 text-primary-foreground" />
@@ -198,17 +421,18 @@ export default function IndexPage() {
       </section>
 
       {/* SERVICES */}
-      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
+      <section data-reveal-group className="w-full py-24 px-6 lg:px-10 bg-[#0a1018]">
+        <div className="mx-auto max-w-7xl rounded-[2rem]  border-white/10 px-6 py-10 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:px-10 lg:px-12 lg:py-14">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
           <div>
-            <span className="eyebrow">What We Do</span>
-            <h2 className="font-display text-4xl sm:text-5xl mt-3">
+            <span className="eyebrow text-white/65">What We Do</span>
+            <h2 className="font-display text-4xl sm:text-5xl mt-3 text-white">
               Services crafted with <span className="text-gradient-gold">precision</span>.
             </h2>
           </div>
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+            className="inline-flex items-center gap-2 font-medium text-white/85 hover:gap-3 hover:text-white transition-all"
           >
             View all services <ArrowRight className="h-4 w-4" />
           </Link>
@@ -218,7 +442,8 @@ export default function IndexPage() {
             <Link
               to="/services"
               key={s.title}
-              className="group rounded-2xl overflow-hidden premium-card premium-card-hover"
+              data-reveal-card
+              className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-white/20 reveal-card"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
@@ -231,28 +456,29 @@ export default function IndexPage() {
                 />
               </div>
               <div className="p-7">
-                <h3 className="font-display text-2xl mb-2">{s.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                <h3 className="font-display text-2xl mb-2 text-white">{s.title}</h3>
+                <p className="text-sm leading-relaxed text-white/70">{s.desc}</p>
               </div>
             </Link>
           ))}
         </div>
+        </div>
       </section>
 
       {/* BANNER STRIP */}
-      <section className="relative px-6 lg:px-10">
-        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden border border-primary/15 shadow-elegant relative">
-          <img
-            src="https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1779452825/dcln_rduvyw.png"
-            alt="Luxury Dubai villa at golden hour"
-            loading="lazy"
-            width={1920}
-            height={1080}
-            className="w-full h-[420px] sm:h-[520px] object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
-          <div className="absolute inset-0 flex items-center">
-            <div className="px-8 sm:px-14 max-w-2xl">
+      <section className="relative w-full overflow-hidden">
+        <img
+          src={heroBuilding}
+          alt="Luxury Dubai villa at golden hour"
+          loading="lazy"
+          width={1920}
+          height={1080}
+          className="h-[420px] w-full object-cover sm:h-[520px]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="mx-auto w-full max-w-7xl px-6 lg:px-10">
+            <div className="max-w-2xl">
               <span className="eyebrow">
                 UAE WIDE COVERAGE
               </span>
@@ -276,7 +502,7 @@ export default function IndexPage() {
       </section>
 
       {/* PROCESS */}
-      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
+      <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
         <div className="text-center mb-14">
           <span className="eyebrow">HOW WE WORK</span>
           <h2 className="font-display text-4xl sm:text-5xl mt-3">
@@ -287,7 +513,8 @@ export default function IndexPage() {
           {process.map((p) => (
             <div
               key={p.n}
-              className="relative p-8 premium-card premium-card-hover"
+              data-reveal-card
+              className="reveal-card relative p-8 premium-card premium-card-hover"
             >
               <div className="font-display text-5xl text-gradient-gold mb-4">{p.n}</div>
               <h3 className="font-semibold text-lg mb-2">{p.t}</h3>
@@ -298,20 +525,24 @@ export default function IndexPage() {
       </section>
 
       {/* PROJECT GALLERY */}
-      <section className="py-20 px-6 lg:px-10 max-w-7xl mx-auto">
+      <section data-reveal-group className="w-full bg-[#0a1018] py-20 px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
           <div>
-            <span className="eyebrow">RECENT WORK</span>
-            <h2 className="font-display text-4xl sm:text-5xl mt-3">
+            <span className="eyebrow text-white/65">RECENT WORK</span>
+            <h2 className="font-display text-4xl sm:text-5xl mt-3 text-white">
               Projects we are <span className="text-gradient-gold">proud of</span>.
             </h2>
           </div>
-          <p className="text-muted-foreground max-w-md">
+          <p className="max-w-md text-white/70">
             A glimpse into the spaces we've restored, refined and reimagined for our clients.
           </p>
         </div>
         <div className="grid md:grid-cols-12 gap-4">
-          <div className="md:col-span-7 rounded-2xl overflow-hidden border border-border shadow-elegant">
+          <div
+            data-reveal-card
+            className="reveal-card md:col-span-7 overflow-hidden rounded-2xl border border-white/10 shadow-elegant"
+          >
             <img
               src={living}
               alt="Renovated luxury living room"
@@ -322,7 +553,10 @@ export default function IndexPage() {
             />
           </div>
           <div className="md:col-span-5 grid gap-4">
-            <div className="rounded-2xl overflow-hidden border border-border shadow-elegant">
+            <div
+              data-reveal-card
+              className="reveal-card overflow-hidden rounded-2xl border border-white/10 shadow-elegant"
+            >
               <img
                 src={kitchen}
                 alt="Modern kitchen renovation"
@@ -332,7 +566,10 @@ export default function IndexPage() {
                 className="w-full h-full object-cover aspect-[16/10]"
               />
             </div>
-            <div className="rounded-2xl overflow-hidden border border-border shadow-elegant">
+            <div
+              data-reveal-card
+              className="reveal-card overflow-hidden rounded-2xl border border-white/10 shadow-elegant"
+            >
               <img
                 src={plumbing}
                 alt="Marble bathroom renovation"
@@ -344,11 +581,15 @@ export default function IndexPage() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* WHY US split */}
-      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-        <div className="rounded-3xl overflow-hidden border border-border shadow-elegant">
+      <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+        <div
+          data-reveal-card
+          className="reveal-card rounded-3xl overflow-hidden border border-border shadow-elegant"
+        >
           <img
             src={team}
             alt="Fixoo Nova service team"
@@ -358,7 +599,7 @@ export default function IndexPage() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
+        <div data-reveal-card className="reveal-card">
           <span className="eyebrow">WHY FIXOO NOVA</span>
           <h2 className="font-display text-4xl sm:text-5xl mt-3 mb-6">
             A team that takes <span className="text-gradient-gold">ownership</span>.
@@ -384,10 +625,11 @@ export default function IndexPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
+      <section data-reveal-group className="w-full bg-[#0a1018] py-24 px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl">
         <div className="text-center mb-14">
-          <span className="eyebrow">CLIENT VOICES</span>
-          <h2 className="font-display text-4xl sm:text-5xl mt-3">
+          <span className="eyebrow text-white/65">CLIENT VOICES</span>
+          <h2 className="font-display text-4xl sm:text-5xl mt-3 text-white">
             Trusted by <span className="text-gradient-gold">homeowners</span> & businesses.
           </h2>
         </div>
@@ -401,23 +643,27 @@ export default function IndexPage() {
                 key={t.name}
                 className="md:basis-1/2 lg:basis-1/3"
               >
-                <div className="h-full p-8 premium-card premium-card-hover relative">
-                  <Quote className="h-8 w-8 text-primary/40 mb-4" />
-                  <p className="text-sm leading-relaxed mb-6">"{t.quote}"</p>
+                <div
+                  data-reveal-card
+                  className="reveal-card relative h-full rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm transition hover:border-white/20"
+                >
+                  <Quote className="mb-4 h-8 w-8 text-primary/50" />
+                  <p className="mb-6 text-sm leading-relaxed text-white/75">"{t.quote}"</p>
                   <div className="flex items-center gap-1 mb-3">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="h-3.5 w-3.5 fill-primary text-primary" />
                     ))}
                   </div>
-                  <div className="font-semibold text-sm">{t.name}</div>
-                  <div className="text-xs text-muted-foreground">{t.role}</div>
+                  <div className="text-sm font-semibold text-white">{t.name}</div>
+                  <div className="text-xs text-white/55">{t.role}</div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="-left-4 sm:-left-6 border-primary/30 bg-card/90 hover:bg-card" />
-          <CarouselNext className="-right-4 sm:-right-6 border-primary/30 bg-card/90 hover:bg-card" />
+          <CarouselPrevious className="-left-4 sm:-left-6 border-white/20 bg-black/45 text-white hover:bg-black/65" />
+          <CarouselNext className="-right-4 sm:-right-6 border-white/20 bg-black/45 text-white hover:bg-black/65" />
         </Carousel>
+        </div>
       </section>
 
       {/* CTA */}
@@ -439,5 +685,29 @@ export default function IndexPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function PopupField({
+  label,
+  name,
+  type = "text",
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <div>
+      <label className="text-xs uppercase tracking-widest text-muted-foreground">{label}</label>
+      <input
+        name={name}
+        type={type}
+        required={required}
+        className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+      />
+    </div>
   );
 }

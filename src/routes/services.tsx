@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Wind,
@@ -98,7 +99,16 @@ const groups = [
   },
 ];
 
+const serviceOptions = groups.flatMap((group) =>
+  group.items.map((item) => ({
+    label: `${group.title} - ${item.t}`,
+    value: item.t,
+  })),
+);
+
 export default function ServicesPage() {
+  const [sent, setSent] = useState(false);
+
   return (
     <>
       <section className="px-6 lg:px-10 pt-24 pb-12 max-w-7xl mx-auto">
@@ -169,20 +179,99 @@ export default function ServicesPage() {
       </section>
 
       <section className="px-6 lg:px-10 pb-24 max-w-7xl mx-auto">
-        <div className="rounded-3xl border border-primary/20 bg-card p-10 lg:p-14 text-center shadow-elegant">
-          <h2 className="font-display text-3xl sm:text-4xl mb-4">Need something not listed?</h2>
-          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-            If your property needs it, we probably do it. Reach out and we'll arrange a tailored
-            visit.
-          </p>
-          <Link
-            to="/contact"
-            className="btn-primary"
+        <div className="grid gap-8 lg:grid-cols-5">
+          <div className="rounded-3xl border border-primary/20 bg-card p-10 lg:col-span-2 shadow-elegant">
+            <span className="eyebrow">SERVICE INQUIRY</span>
+            <h2 className="font-display text-3xl sm:text-4xl mt-3 mb-4">Tell us what you need.</h2>
+            <p className="text-muted-foreground mb-8">
+              Share your requirements and choose a service. Our team will contact you with a
+              tailored plan and quote.
+            </p>
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <p>Fast response within working hours.</p>
+              <p>Site visit scheduling available across UAE.</p>
+              <p>Transparent quote before work begins.</p>
+            </div>
+            <Link to="/contact" className="btn-outline mt-8">
+              Talk to a specialist <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSent(true);
+            }}
+            className="rounded-3xl border border-primary/20 bg-card p-8 lg:col-span-3 shadow-elegant"
           >
-            Talk to a specialist <ArrowRight className="h-4 w-4" />
-          </Link>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field label="Name" name="name" required />
+              <Field label="Phone" name="phone" type="tel" required />
+            </div>
+            <div className="mt-5 grid gap-5 sm:grid-cols-2">
+              <Field label="Email" name="email" type="email" required />
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Service
+                </label>
+                <select
+                  name="service"
+                  required
+                  defaultValue=""
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                >
+                  <option value="" disabled>
+                    Select a service
+                  </option>
+                  {serviceOptions.map((service) => (
+                    <option key={service.label} value={service.value}>
+                      {service.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <label className="text-xs uppercase tracking-widest text-muted-foreground">Message</label>
+              <textarea
+                name="message"
+                rows={5}
+                required
+                className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+              />
+            </div>
+
+            <button type="submit" className="btn-primary mt-6 w-full justify-center sm:w-auto">
+              {sent ? "Thanks, request received" : "Submit Request"}
+            </button>
+          </form>
         </div>
       </section>
     </>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <div>
+      <label className="text-xs uppercase tracking-widest text-muted-foreground">{label}</label>
+      <input
+        name={name}
+        type={type}
+        required={required}
+        className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+      />
+    </div>
   );
 }

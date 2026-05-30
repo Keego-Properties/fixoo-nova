@@ -38,24 +38,24 @@
 :root {
   --radius: 0.625rem;
   /* White luxury + champagne gold */
-  --background: oklch(0.99 0.004 95);
+  --background: oklch(0.985 0.01 92);
   --foreground: oklch(0.2 0.03 265);
-  --card: oklch(1 0 0);
+  --card: oklch(0.995 0.008 92);
   --card-foreground: oklch(0.2 0.03 265);
-  --popover: oklch(1 0 0);
+  --popover: oklch(0.995 0.008 92);
   --popover-foreground: oklch(0.2 0.03 265);
   --primary: oklch(0.58 0.13 78);
-  --primary-foreground: oklch(0.99 0.004 95);
-  --secondary: oklch(0.96 0.008 95);
+  --primary-foreground: oklch(0.985 0.01 92);
+  --secondary: oklch(0.965 0.01 92);
   --secondary-foreground: oklch(0.2 0.03 265);
-  --muted: oklch(0.96 0.008 95);
+  --muted: oklch(0.965 0.01 92);
   --muted-foreground: oklch(0.42 0.02 265);
   --accent: oklch(0.58 0.13 78);
-  --accent-foreground: oklch(0.99 0.004 95);
+  --accent-foreground: oklch(0.985 0.01 92);
   --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.99 0.004 95);
-  --border: oklch(0.9 0.01 95);
-  --input: oklch(0.92 0.01 95);
+  --destructive-foreground: oklch(0.985 0.01 92);
+  --border: oklch(0.89 0.012 92);
+  --input: oklch(0.915 0.012 92);
   --ring: oklch(0.58 0.13 78);
   --gold: oklch(0.58 0.13 78);
   --gold-light: oklch(0.72 0.11 82);
@@ -68,10 +68,10 @@
   );
   --gradient-page: linear-gradient(
     180deg,
-    oklch(0.99 0.004 95) 0%,
-    oklch(0.97 0.008 95) 100%
+    oklch(0.985 0.01 92) 0%,
+    oklch(0.972 0.012 92) 100%
   );
-  --gradient-card: linear-gradient(145deg, oklch(1 0 0) 0%, oklch(0.98 0.006 95) 100%);
+  --gradient-card: linear-gradient(145deg, oklch(0.995 0.008 92) 0%, oklch(0.982 0.01 92) 100%);
   --shadow-gold: 0 8px 28px -6px oklch(0.58 0.13 78 / 28%);
   --shadow-elegant: 0 20px 50px -16px oklch(0.2 0.03 265 / 12%);
   --shadow-card: 0 2px 16px -2px oklch(0.2 0.03 265 / 8%);
@@ -177,6 +177,30 @@
     border-color: oklch(0.58 0.13 78 / 30%);
     box-shadow: var(--shadow-elegant);
     transform: translateY(-2px);
+  }
+}
+
+@utility reveal-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition:
+    opacity 1.2s ease,
+    transform 1.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+  will-change: opacity, transform;
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

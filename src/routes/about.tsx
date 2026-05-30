@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Target, Eye, Award, CheckCircle2, ArrowRight } from "lucide-react";
 import team from "@/assets/team.jpg";
-import banner from "@/assets/hero-banner.jpg";
+import banner from "@/assets/hero-banner-3.jpg";
 import living from "@/assets/project-living.jpg";
 
 export default function AboutPage() {
@@ -23,7 +23,7 @@ export default function AboutPage() {
       <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
         <div className="rounded-3xl overflow-hidden border border-border shadow-elegant">
           <img
-            src="https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1779470503/house_naursj.png"
+            src={banner}
             alt="Premium Dubai property"
             loading="lazy"
             width={1920}

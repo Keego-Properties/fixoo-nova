@@ -1,9 +1,20 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import HomePage from "@/routes/index";
 import AboutPage from "@/routes/about";
 import ServicesPage from "@/routes/services";
 import ContactPage from "@/routes/contact";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+
+  return null;
+}
 
 function NotFoundPage() {
   return (
@@ -30,6 +41,7 @@ function NotFoundPage() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />

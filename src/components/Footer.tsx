@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import logo from "@/assets/fixoo-nova-logo.png";
 
 export function Footer() {
@@ -68,11 +68,43 @@ export function Footer() {
                 <span>Dubai, United Arab Emirates</span>
               </li>
             </ul>
+            <div className="mt-6 flex items-center gap-3">
+              {[
+                { href: "https://www.instagram.com/", label: "Instagram", icon: Instagram },
+                { href: "https://www.facebook.com/", label: "Facebook", icon: Facebook },
+                { href: "https://www.linkedin.com/", label: "LinkedIn", icon: Linkedin },
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={item.label}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition hover:border-primary/50 hover:text-primary"
+                >
+                  <item.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
         <div className="divider-gold max-w-7xl mx-auto" />
         <div className="py-7 text-center text-xs text-white/70 tracking-wide">
-          © {new Date().getFullYear()} Fixoo Nova Building Maintenance. All rights reserved.
+          <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+            <span>© {new Date().getFullYear()} Fixoo Nova Building Maintenance. All rights reserved.</span>
+            <span className="text-white/40">|</span>
+            <span>
+            Design and Developed by Mentecode. {" "}
+            <a
+              href="https://www.mentecode.com/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-primary hover:text-primary/80 transition-colors"
+            >
+              www.mentecode.com
+            </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>
