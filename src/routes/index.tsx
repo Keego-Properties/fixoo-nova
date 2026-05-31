@@ -312,8 +312,12 @@ export default function IndexPage() {
       {/* HERO */}
       <section className="relative min-h-screen w-full overflow-hidden bg-[#090f16]">
         <div className="relative h-full w-full">
-          <div className="pointer-events-none absolute -top-28 -left-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-28 right-0 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -top-28 -left-24 h-80 w-80 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.42)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+          <div className="pointer-events-none absolute -bottom-28 right-0 h-80 w-80 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.36)_0%,transparent_74%)] blur-3xl mix-blend-screen" />
+          <div className="pointer-events-none absolute right-[17%] top-[17%] h-80 w-80 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.38)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+          <div className="pointer-events-none absolute left-[37%] top-[46%] h-56 w-56 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.36)_0%,transparent_74%)] blur-3xl mix-blend-screen" />
+          <div className="pointer-events-none absolute left-[8%] bottom-[10%] h-52 w-52 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.34)_0%,transparent_75%)] blur-3xl mix-blend-screen" />
+          <div className="pointer-events-none absolute right-[10%] bottom-[8%] h-60 w-60 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.34)_0%,transparent_74%)] blur-3xl mix-blend-screen" />
 
           <div className="relative mx-auto grid min-h-screen w-full max-w-7xl gap-10 px-6 py-24 sm:px-8 lg:grid-cols-12 lg:px-10">
             <div className="lg:col-span-5 lg:self-center">
@@ -421,7 +425,11 @@ export default function IndexPage() {
       </section>
 
       {/* SERVICES */}
-      <section data-reveal-group className="w-full py-24 px-6 lg:px-10 bg-[#0a1018]">
+      <section data-reveal-group className="relative w-full overflow-hidden py-24 px-6 lg:px-10 bg-[#0a1018]">
+        <div className="pointer-events-none absolute -left-16 top-12 h-72 w-72 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.34)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute right-[10%] top-[18%] h-60 w-60 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.28)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute left-[35%] bottom-[14%] h-44 w-44 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.24)_0%,transparent_76%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute right-[16%] bottom-8 h-56 w-56 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.32)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
         <div className="mx-auto max-w-7xl rounded-[2rem]  border-white/10 px-6 py-10 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:px-10 lg:px-12 lg:py-14">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
           <div>
@@ -525,7 +533,11 @@ export default function IndexPage() {
       </section>
 
       {/* PROJECT GALLERY */}
-      <section data-reveal-group className="w-full bg-[#0a1018] py-20 px-6 lg:px-10">
+      <section data-reveal-group className="relative w-full overflow-hidden bg-[#0a1018] py-20 px-6 lg:px-10">
+        <div className="pointer-events-none absolute -right-10 top-4 h-80 w-80 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.3)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute left-[8%] top-[28%] h-48 w-48 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.26)_0%,transparent_74%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute left-[12%] bottom-0 h-60 w-60 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.3)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute right-[34%] bottom-[6%] h-44 w-44 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.22)_0%,transparent_76%)] blur-3xl mix-blend-screen" />
         <div className="mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
           <div>
@@ -625,7 +637,11 @@ export default function IndexPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section data-reveal-group className="w-full bg-[#0a1018] py-24 px-6 lg:px-10">
+      <section data-reveal-group className="relative w-full overflow-hidden bg-[#0a1018] py-24 px-6 lg:px-10">
+        <div className="pointer-events-none absolute -right-12 top-10 h-72 w-72 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.3)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute left-[10%] top-[22%] h-52 w-52 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.24)_0%,transparent_74%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute left-[8%] bottom-2 h-52 w-52 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.28)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
+        <div className="pointer-events-none absolute right-[28%] bottom-[10%] h-44 w-44 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.2)_0%,transparent_76%)] blur-3xl mix-blend-screen" />
         <div className="mx-auto max-w-7xl">
         <div className="text-center mb-14">
           <span className="eyebrow text-white/65">CLIENT VOICES</span>
