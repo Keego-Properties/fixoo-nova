@@ -20,9 +20,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import heroSlideOne from "@/assets/hero-banner-1.jpg";
-import heroSlideTwo from "@/assets/her-banner-2.jpg";
-import heroSlideThree from "@/assets/hero-banner-3.jpg";
 import heroBuilding from "@/assets/hero-building.jpg";
 import ac from "@/assets/service-ac.jpg"; 
 import reno from "@/assets/service-renovation.jpg";
@@ -153,15 +150,15 @@ const popupServices = [
 
 const heroSlides = [
   {
-    src: heroSlideOne,
+    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-1_xdunup.jpg",
     alt: "Cleaning team preparing a modern apartment",
   },
   {
-    src: heroSlideTwo,
+    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/her-banner-2_qpqfvv.jpg",
     alt: "Professional technician vacuuming a living room",
   },
   {
-    src: heroSlideThree,
+    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-3_nmgyob.jpg",
     alt: "Technician fixing a sink in a luxury bathroom",
   },
 ];

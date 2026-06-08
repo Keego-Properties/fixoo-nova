@@ -1,6 +1,5 @@
 import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import banner from "@/assets/hero-banner-1.jpg";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
@@ -19,7 +18,7 @@ export default function ContactPage() {
       <section className="px-6 lg:px-10 pb-8 max-w-7xl mx-auto">
         <div className="rounded-3xl overflow-hidden border border-border shadow-elegant relative">
           <img
-            src={banner}
+            src={"https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-1_xdunup.jpg"}
             alt="Dubai luxury property"
             loading="lazy"
             width={1920}
