@@ -169,6 +169,7 @@ const heroSlides = [
 export default function IndexPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupSent, setPopupSent] = useState(false);
+  const [homeContactSent, setHomeContactSent] = useState(false);
   const [heroApi, setHeroApi] = useState<CarouselApi>();
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
 
@@ -697,6 +698,84 @@ export default function IndexPage() {
             <a href="tel:+971500000000" className="btn-primary">
               <Phone className="h-4 w-4" /> Call +971 50 000 0000
             </a>
+          </div>
+        </div>
+      </section>
+
+
+      {/* HOME CONTACT */}
+      <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto" id="home-contact">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div data-reveal-card className="reveal-card">
+            <span className="eyebrow">CONTACT US</span>
+            <h2 className="font-display text-4xl sm:text-5xl mt-3">
+              Tell us what you need. We will get back <span className="text-gradient-gold">today</span>.
+            </h2>
+            <p className="mt-5 max-w-xl text-muted-foreground">
+              Share your property details and service request. Our team will review your message
+              and contact you with the next steps and a clear estimate.
+            </p>
+            <div className="mt-8 space-y-3 text-sm text-muted-foreground">
+              <p>Phone: +971 50 000 0000</p>
+              <p>Email: hello@fixoonova.ae</p>
+              <p>Coverage: Dubai, Abu Dhabi, Sharjah, Ajman, Ras Al Khaimah and beyond.</p>
+            </div>
+          </div>
+
+          <div data-reveal-card className="reveal-card premium-card p-6 sm:p-8">
+            <form
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setHomeContactSent(true);
+                (e.currentTarget as HTMLFormElement).reset();
+              }}
+            >
+              <div className="grid gap-4 sm:grid-cols-2">
+                <PopupField label="Name" name="home-name" required />
+                <PopupField label="Phone" name="home-phone" type="tel" required />
+              </div>
+
+              <PopupField label="Email" name="home-email" type="email" required />
+
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">Service</label>
+                <select
+                  name="home-service"
+                  required
+                  defaultValue=""
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                >
+                  <option value="" disabled>
+                    Select a service
+                  </option>
+                  {popupServices.map((service) => (
+                    <option key={service} value={service}>
+                      {service}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">Message</label>
+                <textarea
+                  name="home-message"
+                  rows={4}
+                  required
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                />
+              </div>
+
+              <button type="submit" className="btn-primary w-full justify-center">
+                {homeContactSent ? "Request Sent" : "Send Request"}
+              </button>
+              {homeContactSent ? (
+                <p className="text-center text-sm text-muted-foreground">
+                  Thank you. Our team will contact you shortly.
+                </p>
+              ) : null}
+            </form>
           </div>
         </div>
       </section>

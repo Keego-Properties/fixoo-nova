@@ -15,12 +15,22 @@ import {
   ShieldCheck,
   ArrowRight,
 } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import ac from "@/assets/service-ac.jpg";
 import reno from "@/assets/service-renovation.jpg";
 import clean from "@/assets/service-cleaning.jpg";
 import electrical from "@/assets/service-electrical.jpg";
 import plumbing from "@/assets/service-plumbing.jpg";
 import kitchen from "@/assets/project-kitchen.jpg";
+
+const featuredServices = [
+  { img: ac, t: "AC & HVAC" },
+  { img: reno, t: "Renovation" },
+  { img: clean, t: "Deep Cleaning" },
+  { img: electrical, t: "Electrical & ELV" },
+  { img: plumbing, t: "Plumbing" },
+  { img: kitchen, t: "Kitchen & Joinery" },
+];
 
 const groups = [
   {
@@ -106,11 +116,90 @@ const serviceOptions = groups.flatMap((group) =>
   })),
 );
 
+const popupServiceOptions = [
+  ...new Map(
+    [...serviceOptions.map((option) => [option.value, option]), ...featuredServices.map((service) => [service.t, { label: service.t, value: service.t }])],
+  ).values(),
+  { label: "Other", value: "Other" },
+];
+
 export default function ServicesPage() {
   const [sent, setSent] = useState(false);
+  const [showServicePopup, setShowServicePopup] = useState(false);
+  const [selectedPopupService, setSelectedPopupService] = useState("");
+  const [popupSent, setPopupSent] = useState(false);
+
+  const openServicePopup = (service: string) => {
+    setSelectedPopupService(service);
+    setPopupSent(false);
+    setShowServicePopup(true);
+  };
 
   return (
     <>
+      <Dialog open={showServicePopup} onOpenChange={setShowServicePopup}>
+        <DialogContent className="max-w-xl rounded-2xl border border-primary/25 bg-card p-0">
+          <div className="p-6 sm:p-8">
+            <DialogHeader>
+              <span className="eyebrow">SERVICE REQUEST</span>
+              <DialogTitle className="font-display text-3xl mt-2">Book this service</DialogTitle>
+              <DialogDescription className="mt-2">
+                Submit your details and our team will contact you with the best plan.
+              </DialogDescription>
+            </DialogHeader>
+
+            <form
+              className="mt-6 space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPopupSent(true);
+              }}
+            >
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Name" name="popup-name" required />
+                <Field label="Phone" name="popup-phone" type="tel" required />
+              </div>
+
+              <Field label="Email" name="popup-email" type="email" required />
+
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">Service</label>
+                <select
+                  name="popup-service"
+                  required
+                  value={selectedPopupService}
+                  onChange={(e) => setSelectedPopupService(e.target.value)}
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                >
+                  <option value="" disabled>
+                    Select a service
+                  </option>
+                  {popupServiceOptions.map((service) => (
+                    <option key={service.value} value={service.value}>
+                      {service.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs uppercase tracking-widest text-muted-foreground">Message</label>
+                <textarea
+                  name="popup-message"
+                  rows={4}
+                  required
+                  className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+                />
+              </div>
+
+              <button type="submit" className="btn-primary w-full justify-center">
+                {popupSent ? "Request Received" : "Submit Request"}
+              </button>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <section className="px-6 lg:px-10 pt-24 pb-12 max-w-7xl mx-auto">
         <span className="eyebrow">WHAT WE OFFER</span>
         <h1 className="font-display text-5xl sm:text-6xl mt-4 mb-6 max-w-4xl leading-tight">
@@ -124,16 +213,11 @@ export default function ServicesPage() {
 
       <section className="px-6 lg:px-10 pb-12 max-w-7xl mx-auto">
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { img: ac, t: "AC & HVAC" },
-            { img: reno, t: "Renovation" },
-            { img: clean, t: "Deep Cleaning" },
-            { img: electrical, t: "Electrical & ELV" },
-            { img: plumbing, t: "Plumbing" },
-            { img: kitchen, t: "Kitchen & Joinery" },
-          ].map((s) => (
-            <div
+          {featuredServices.map((s) => (
+            <button
+              type="button"
               key={s.t}
+              onClick={() => openServicePopup(s.t)}
               className="relative rounded-2xl overflow-hidden border border-border shadow-elegant group"
             >
               <img
@@ -148,7 +232,7 @@ export default function ServicesPage() {
               <div className="absolute bottom-0 left-0 p-5">
                 <h3 className="font-display text-xl">{s.t}</h3>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -162,8 +246,10 @@ export default function ServicesPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {g.items.map((i) => (
-                <div
+                <button
+                  type="button"
                   key={i.t}
+                  onClick={() => openServicePopup(i.t)}
                   className="p-7 premium-card premium-card-hover group"
                 >
                   <div className="icon-gold mb-4">
@@ -171,7 +257,7 @@ export default function ServicesPage() {
                   </div>
                   <h3 className="font-semibold text-lg mb-2">{i.t}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{i.d}</p>
-                </div>
+                </button>
               ))}
             </div>
           </div>
