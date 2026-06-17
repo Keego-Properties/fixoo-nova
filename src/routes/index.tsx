@@ -29,6 +29,7 @@ import plumbing from "@/assets/service-plumbing.jpg";
 import team from "@/assets/team.jpg";
 import living from "@/assets/project-living.jpg";
 import kitchen from "@/assets/project-kitchen.jpg";
+import servicesVideo from "../../public/ac-repair.mp4";
 
 const features = [
   {
@@ -45,6 +46,7 @@ const features = [
   { icon: Wrench, title: "End-to-End Care", desc: "From a leaking tap to full villa renovation." },
 ];
 
+const servicesVideoSrc = servicesVideo;
 const services = [
   {
     img: ac,
@@ -150,16 +152,16 @@ const popupServices = [
 
 const heroSlides = [
   {
-    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-1_xdunup.jpg",
-    alt: "Cleaning team preparing a modern apartment",
+    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1781679814/ac_dqt6h1.jpg",
+    alt: "Technician servicing a ceiling-mounted air conditioning unit",
   },
   {
-    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/her-banner-2_qpqfvv.jpg",
-    alt: "Professional technician vacuuming a living room",
+    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1781679814/electrician_bwsryp.jpg",
+    alt: "Electrician working on an industrial electrical control panel",
   },
   {
-    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-3_nmgyob.jpg",
-    alt: "Technician fixing a sink in a luxury bathroom",
+    src: "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1781679814/plumbing_ale4fg.jpg",
+    alt: "Plumber performing professional plumbing maintenance",
   },
 ];
 
@@ -402,6 +404,20 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
+      <div className="relative left-1/2 mb-14 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden">
+          <video
+            className="w-full object-cover sm:h-[360px] lg:h-[60vh]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Fixoo Nova maintenance services showcase"
+          >
+            <source src={servicesVideoSrc} type="video/mp4" />
+          </video>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a1018]/50 via-transparent to-[#0a1018]/20" />
+        </div>
 
       {/* FEATURES */}
       <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
@@ -428,8 +444,8 @@ export default function IndexPage() {
         <div className="pointer-events-none absolute right-[10%] top-[18%] h-60 w-60 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.28)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
         <div className="pointer-events-none absolute left-[35%] bottom-[14%] h-44 w-44 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.24)_0%,transparent_76%)] blur-3xl mix-blend-screen" />
         <div className="pointer-events-none absolute right-[16%] bottom-8 h-56 w-56 rounded-full bg-[radial-gradient(circle,oklch(0.64_0.16_72/0.32)_0%,transparent_72%)] blur-3xl mix-blend-screen" />
-        <div className="mx-auto max-w-7xl rounded-[2rem]  border-white/10 px-6 py-10 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:px-10 lg:px-12 lg:py-14">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
+        <div className="mx-auto max-w-7xl rounded-[2rem] border-white/10 px-6 py-10 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:px-10 lg:px-12 lg:py-14">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
           <div>
             <span className="eyebrow text-white/65">What We Do</span>
             <h2 className="font-display text-4xl sm:text-5xl mt-3 text-white">
@@ -443,6 +459,10 @@ export default function IndexPage() {
             View all services <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+        </div>
+
+
+        <div className="mx-auto max-w-7xl rounded-[2rem] border-white/10 px-6 pb-10 shadow-[0_24px_70px_rgba(0,0,0,0.28)] sm:px-10 lg:px-12 lg:pb-14">
         <div className="grid md:grid-cols-3 gap-6">
           {services.map((s) => (
             <Link
