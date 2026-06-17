@@ -331,9 +331,20 @@ export default function IndexPage() {
               </h1>
 
               <p className="mt-5 max-w-md text-sm leading-relaxed text-white/75 sm:text-base">
-                Premium maintenance, cleaning and technical services delivered on schedule for homes,
-                villas and commercial spaces across the UAE.
+                Certified technicians for cooling systems, pipe work and electrical faults — fast
+                response, transparent pricing and reliable workmanship across the UAE.
               </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["AC Repair", "Pipe Leaks", "Electrical Faults", "24/7 Emergency"].map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-white/70"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
 
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link to="/services" className="btn-primary">
@@ -349,9 +360,9 @@ export default function IndexPage() {
 
               <div className="mt-8 grid max-w-md grid-cols-3 gap-3 rounded-2xl border border-white/15 bg-black/25 p-4 text-white backdrop-blur">
                 {[
-                  { label: "Homes Sold", value: "7K+" },
-                  { label: "Customer", value: "9" },
-                  { label: "Store", value: "2K+" },
+                  { label: "AC Units Serviced", value: "500+" },
+                  { label: "Emergency Line", value: "24/7" },
+                  { label: "Happy Clients", value: "1K+" },
                 ].map((item) => (
                   <div key={item.label} className="min-w-0">
                     <p className="text-lg font-bold leading-none text-white">{item.value}</p>
