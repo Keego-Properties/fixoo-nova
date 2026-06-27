@@ -10,6 +10,10 @@ import {
   Star,
   CheckCircle2,
   Quote,
+  Wind,
+  Droplets,
+  Zap,
+  Calendar,
 } from "lucide-react";
 import {
   type CarouselApi,
@@ -161,6 +165,7 @@ const testimonials = [
 const HOME_POPUP_KEY = "fixoo_nova_home_popup_seen_v1";
 
 const bookingServices = [
+  "Annual Maintenance Plan",
   "AC & HVAC",
   "Plumbing",
   "Electrical & ELV",
@@ -169,6 +174,7 @@ const bookingServices = [
 ];
 
 const popupServices = [
+  "Annual Maintenance Plan",
   ...new Set(services.map((service) => service.title)),
   "General Maintenance",
   "Other",
@@ -611,6 +617,93 @@ export default function IndexPage() {
             </Link>
           ))}
         </div>
+        </div>
+      </section>
+
+      {/* YEARLY MAINTENANCE OFFER */}
+      <section data-reveal-group className="relative w-full overflow-hidden py-24 px-6 lg:px-10">
+        <div className="pointer-events-none absolute -right-10 top-8 h-80 w-80 rounded-full bg-[radial-gradient(circle,oklch(0.74_0.14_76/0.2)_0%,transparent_72%)] blur-3xl" />
+        <div className="mx-auto max-w-7xl">
+          <div className="overflow-hidden rounded-[2rem] border border-primary/20 bg-card shadow-elegant">
+            <div className="grid lg:grid-cols-2">
+              <div data-reveal-card className="reveal-card p-10 sm:p-12 lg:p-14">
+                <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium tracking-wide text-primary">
+                  <Sparkles className="h-3.5 w-3.5" /> Yearly Maintenance Offer
+                </span>
+                <h2 className="font-display mt-6 text-4xl sm:text-5xl leading-tight">
+                  One contract for{" "}
+                  <span className="text-gradient-gold">AC, plumbing & electrical</span>.
+                </h2>
+                <p className="mt-5 max-w-lg text-muted-foreground leading-relaxed">
+                  Skip the emergency call-outs. Our annual maintenance plan covers scheduled
+                  servicing, preventive inspections and priority support for your entire property —
+                  all year round.
+                </p>
+                <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {[
+                    { icon: Wind, label: "AC & HVAC servicing" },
+                    { icon: Droplets, label: "Plumbing checks & repairs" },
+                    { icon: Zap, label: "Electrical & ELV inspections" },
+                    { icon: Wrench, label: "General property upkeep" },
+                  ].map((item) => (
+                    <li key={item.label} className="flex items-center gap-3 text-sm">
+                      <div className="icon-gold shrink-0 !mb-0 scale-90">
+                        <item.icon className="h-4 w-4 text-primary-foreground" />
+                      </div>
+                      <span>{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <Link to="/maintenance-plan" className="btn-primary">
+                    View Plans & Pricing <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <a href="tel:+971500000000" className="btn-outline">
+                    <Phone className="h-4 w-4" /> Get a Quote
+                  </a>
+                </div>
+              </div>
+              <div
+                data-reveal-card
+                className="reveal-card relative flex flex-col justify-center border-t border-border lg:border-l lg:border-t-0 bg-secondary/40 p-10 sm:p-12 lg:p-14"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-transparent" />
+                <div className="relative space-y-6">
+                  <div className="flex items-start gap-4">
+                    <Calendar className="mt-1 h-6 w-6 shrink-0 text-primary" />
+                    <div>
+                      <h3 className="font-display text-xl">Scheduled visits</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        4 to 12 visits per year depending on your plan — we handle the calendar.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <Shield className="mt-1 h-6 w-6 shrink-0 text-primary" />
+                    <div>
+                      <h3 className="font-display text-xl">Priority support</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Faster response times and dedicated technicians who know your property.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <CheckCircle2 className="mt-1 h-6 w-6 shrink-0 text-primary" />
+                    <div>
+                      <h3 className="font-display text-xl">Transparent reporting</h3>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Detailed reports after every visit — apartments, villas and offices.
+                      </p>
+                    </div>
+                  </div>
+                  <p className="rounded-xl border border-primary/20 bg-primary/5 px-5 py-4 text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">Free site survey</span> — we
+                    assess your property and recommend the right plan with no obligation.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
