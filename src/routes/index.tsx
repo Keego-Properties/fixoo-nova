@@ -24,8 +24,8 @@ import heroBuilding from "@/assets/hero-building.jpg";
 import ac from "@/assets/service-ac.jpg"; 
 import reno from "@/assets/service-renovation.jpg";
 import clean from "@/assets/service-cleaning.jpg";
-import electrical from "@/assets/service-electrical.jpg";
-import plumbing from "@/assets/service-plumbing.jpg";
+import electrical from "@/assets/electrician.webp";
+import plumbing from "@/assets/plumber.webp";
 import team from "@/assets/team.jpg";
 import living from "@/assets/project-living.jpg";
 import kitchen from "@/assets/project-kitchen.jpg";
@@ -46,22 +46,15 @@ const features = [
   { icon: Wrench, title: "End-to-End Care", desc: "From a leaking tap to full villa renovation." },
 ];
 
+const plumbingServiceImg =
+  "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-3_nmgyob.jpg";
+
 const servicesVideoSrc = servicesVideo;
 const services = [
   {
     img: ac,
     title: "AC & HVAC",
     desc: "Duct cleaning, servicing and full HVAC maintenance for healthy, cool spaces.",
-  },
-  {
-    img: reno,
-    title: "Renovation",
-    desc: "Villa, apartment, office and bathroom transformations with luxurious finishes.",
-  },
-  {
-    img: clean,
-    title: "Deep Cleaning",
-    desc: "Sofa, mattress, carpet, curtain and full deep-clean for homes and offices.",
   },
   {
     img: electrical,
@@ -72,6 +65,16 @@ const services = [
     img: plumbing,
     title: "Plumbing",
     desc: "Leak repair, fixture upgrades, water tank cleaning and full bathroom retrofits.",
+  },
+  {
+    img: reno,
+    title: "Renovation",
+    desc: "Villa, apartment, office and bathroom transformations with luxurious finishes.",
+  },
+  {
+    img: clean,
+    title: "Deep Cleaning",
+    desc: "Sofa, mattress, carpet, curtain and full deep-clean for homes and offices.",
   },
   {
     img: kitchen,
@@ -415,9 +418,10 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-      <div className="relative left-1/2 mb-14 w-screen max-w-[100vw] -translate-x-1/2 overflow-hidden">
+      <div className="relative w-full overflow-hidden">
+        <div className="relative h-[60vh] w-full overflow-hidden bg-[#090f16]">
           <video
-            className="w-full object-cover sm:h-[360px] lg:h-[60vh]"
+            className="absolute inset-0 h-full w-full object-cover"
             autoPlay
             muted
             loop
@@ -429,6 +433,7 @@ export default function IndexPage() {
           </video>
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a1018]/50 via-transparent to-[#0a1018]/20" />
         </div>
+      </div>
 
       {/* FEATURES */}
       <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
