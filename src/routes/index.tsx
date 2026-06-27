@@ -24,10 +24,11 @@ import heroBuilding from "@/assets/hero-building.jpg";
 import ac from "@/assets/service-ac.jpg"; 
 import reno from "@/assets/service-renovation.jpg";
 import clean from "@/assets/service-cleaning.jpg";
-import electrical from "@/assets/electrician.webp";
-import plumbing from "@/assets/plumber.webp";
+import electrician from "@/assets/electrician.webp";
+import plumbingImg from "@/assets/plumber.webp";
+import acMech from "@/assets/ac mech.webp";
+import projectPlumbing from "@/assets/plumbing.webp";
 import team from "@/assets/team.jpg";
-import living from "@/assets/project-living.jpg";
 import kitchen from "@/assets/project-kitchen.jpg";
 import servicesVideo from "../../public/ac-repair.mp4";
 
@@ -46,8 +47,20 @@ const features = [
   { icon: Wrench, title: "End-to-End Care", desc: "From a leaking tap to full villa renovation." },
 ];
 
-const plumbingServiceImg =
-  "https://res.cloudinary.com/dg7r4k0up/image/upload/q_auto/f_auto/v1780903670/hero-banner-3_nmgyob.jpg";
+const projectGallery = {
+  main: {
+    src: acMech,
+    alt: "AC mechanic servicing an air conditioning unit",
+  },
+  electrical: {
+    src: electrician,
+    alt: "Electrician working on an electrical control panel",
+  },
+  plumbing: {
+    src: projectPlumbing,
+    alt: "Plumber performing professional plumbing maintenance",
+  },
+};
 
 const servicesVideoSrc = servicesVideo;
 const services = [
@@ -57,12 +70,12 @@ const services = [
     desc: "Duct cleaning, servicing and full HVAC maintenance for healthy, cool spaces.",
   },
   {
-    img: electrical,
+    img: electrician,
     title: "Electrical & ELV",
     desc: "Wiring, panels, intercom, CCTV and access control by certified engineers.",
   },
   {
-    img: plumbing,
+    img: plumbingImg,
     title: "Plumbing",
     desc: "Leak repair, fixture upgrades, water tank cleaning and full bathroom retrofits.",
   },
@@ -675,7 +688,8 @@ export default function IndexPage() {
             </h2>
           </div>
           <p className="max-w-md text-white/70">
-            A glimpse into the spaces we've restored, refined and reimagined for our clients.
+            Specialist AC repairs, electrical installations and plumbing fixes — the core work our
+            team delivers every day across the UAE.
           </p>
         </div>
         <div className="grid md:grid-cols-12 gap-4">
@@ -684,8 +698,8 @@ export default function IndexPage() {
             className="reveal-card md:col-span-7 overflow-hidden rounded-2xl border border-white/10 shadow-elegant"
           >
             <img
-              src={living}
-              alt="Renovated luxury living room"
+              src={projectGallery.main.src}
+              alt={projectGallery.main.alt}
               loading="lazy"
               width={1280}
               height={960}
@@ -698,8 +712,8 @@ export default function IndexPage() {
               className="reveal-card overflow-hidden rounded-2xl border border-white/10 shadow-elegant"
             >
               <img
-                src={kitchen}
-                alt="Modern kitchen renovation"
+                src={projectGallery.electrical.src}
+                alt={projectGallery.electrical.alt}
                 loading="lazy"
                 width={1280}
                 height={960}
@@ -711,8 +725,8 @@ export default function IndexPage() {
               className="reveal-card overflow-hidden rounded-2xl border border-white/10 shadow-elegant"
             >
               <img
-                src={plumbing}
-                alt="Marble bathroom renovation"
+                src={projectGallery.plumbing.src}
+                alt={projectGallery.plumbing.alt}
                 loading="lazy"
                 width={1280}
                 height={960}
