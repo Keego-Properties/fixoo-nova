@@ -147,6 +147,14 @@ const testimonials = [
 
 const HOME_POPUP_KEY = "fixoo_nova_home_popup_seen_v1";
 
+const bookingServices = [
+  "AC & HVAC",
+  "Plumbing",
+  "Electrical & ELV",
+  "General Maintenance",
+  "Other",
+];
+
 const popupServices = [
   ...new Set(services.map((service) => service.title)),
   "General Maintenance",
@@ -172,6 +180,7 @@ export default function IndexPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupSent, setPopupSent] = useState(false);
   const [homeContactSent, setHomeContactSent] = useState(false);
+  const [videoBookingSent, setVideoBookingSent] = useState(false);
   const [heroApi, setHeroApi] = useState<CarouselApi>();
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
 
@@ -418,22 +427,107 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-      <div className="relative w-full overflow-hidden">
-        <div className="relative h-[60vh] w-full overflow-hidden bg-[#090f16]">
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Fixoo Nova maintenance services showcase"
-          >
-            <source src={servicesVideoSrc} type="video/mp4" />
-          </video>
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a1018]/50 via-transparent to-[#0a1018]/20" />
+      {/* VIDEO + BOOKING */}
+      <section className="relative w-full overflow-hidden bg-secondary/40 lg:h-[calc(100svh-4.5rem)] lg:max-h-[720px]">
+        <div className="grid h-full lg:grid-cols-2">
+          <div className="relative h-[30vh] max-h-[260px] overflow-hidden bg-[#090f16] sm:h-[34vh] sm:max-h-[300px] lg:h-full lg:max-h-none">
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Fixoo Nova maintenance services showcase"
+            >
+              <source src={servicesVideoSrc} type="video/mp4" />
+            </video>
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#090f16]/70 via-[#090f16]/10 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-[#090f16]/30" />
+            <div className="absolute bottom-4 left-4 hidden max-w-[220px] rounded-lg border border-white/15 bg-black/40 px-3 py-2 backdrop-blur-md lg:block">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-primary">Watch us work</p>
+              <p className="mt-0.5 text-xs leading-snug text-white/75">
+                AC, plumbing and electrical experts across the UAE.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center overflow-y-auto px-5 py-6 sm:px-8 lg:px-10 lg:py-5">
+            <div className="premium-card w-full border-primary/15 p-5 shadow-elegant sm:p-6">
+              <span className="eyebrow">Quick Booking</span>
+              <h2 className="font-display mt-1.5 text-2xl sm:text-3xl">
+                Book a service <span className="text-gradient-gold">visit</span>
+              </h2>
+              <p className="mt-2 text-sm leading-snug text-muted-foreground">
+                Our team will confirm your appointment — usually within the hour.
+              </p>
+
+              <form
+                className="mt-4 space-y-3"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setVideoBookingSent(true);
+                  (e.currentTarget as HTMLFormElement).reset();
+                }}
+              >
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <PopupField label="Name" name="video-name" required compact />
+                  <PopupField label="Phone" name="video-phone" type="tel" required compact />
+                </div>
+
+                <PopupField label="Email" name="video-email" type="email" required compact />
+
+                <div>
+                  <label className="text-xs uppercase tracking-widest text-muted-foreground">Service</label>
+                  <select
+                    name="video-service"
+                    required
+                    defaultValue=""
+                    className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm focus:border-primary focus:outline-none transition"
+                  >
+                    <option value="" disabled>
+                      Select a service
+                    </option>
+                    {bookingServices.map((service) => (
+                      <option key={service} value={service}>
+                        {service}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs uppercase tracking-widest text-muted-foreground">Message</label>
+                  <textarea
+                    name="video-message"
+                    rows={2}
+                    placeholder="Describe your issue or preferred visit time..."
+                    required
+                    className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none transition"
+                  />
+                </div>
+
+                <button type="submit" className="btn-primary w-full justify-center py-2.5 text-sm">
+                  {videoBookingSent ? "Booking Request Sent" : "Book Now"}
+                </button>
+
+                {videoBookingSent ? (
+                  <p className="text-center text-xs text-muted-foreground">
+                    Thank you — we will contact you shortly to confirm your visit.
+                  </p>
+                ) : (
+                  <p className="flex items-center justify-center gap-2 text-center text-xs text-muted-foreground">
+                    <Phone className="h-3.5 w-3.5 text-primary" />
+                    Prefer to call?{" "}
+                    <a href="tel:+971500000000" className="font-medium text-primary hover:underline">
+                      +971 50 000 0000
+                    </a>
+                  </p>
+                )}
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* FEATURES */}
       <section data-reveal-group className="py-24 px-6 lg:px-10 max-w-7xl mx-auto">
@@ -821,11 +915,13 @@ function PopupField({
   name,
   type = "text",
   required,
+  compact,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  compact?: boolean;
 }) {
   return (
     <div>
@@ -834,7 +930,9 @@ function PopupField({
         name={name}
         type={type}
         required={required}
-        className="mt-2 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:border-primary focus:outline-none transition"
+        className={`w-full rounded-lg border border-input bg-background text-sm focus:border-primary focus:outline-none transition ${
+          compact ? "mt-1.5 px-3 py-2.5" : "mt-2 px-4 py-3"
+        }`}
       />
     </div>
   );
